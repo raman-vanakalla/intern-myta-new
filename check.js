@@ -450,7 +450,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   particleground(document.getElementById('particles'), {
-    dotColor: 'black',
+    dotColor: '#eee',
     lineColor: '#eee'
   });
   var intro = document.getElementById('intro');
