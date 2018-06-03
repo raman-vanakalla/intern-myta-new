@@ -1,0 +1,14 @@
+:root
+{
+	--backgroundcolor:blue;
+}
+body
+{
+	background-color: var(--backgroundcolor);
+	
+}
+img
+{
+	height: 50px;
+	width: 30px;
+}
