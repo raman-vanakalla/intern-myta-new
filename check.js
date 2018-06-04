@@ -3,8 +3,18 @@
  * @version 1.1.0
  * Inspired & based on "Particleground" by Jonathan Nicol
  */
+   var pics=['basketball.svg','bell.svg','blackboard.svg','calendar.svg','clock.svg','idea.svg','laptop.svg','magnifier.svg','ruler.svg','school-bag.svg','bulb.svg','globe-grid.svg','document.svg','book-1.svg','book.svg','trophy.svg','graduation-cap.svg','science.svg','pencil.svg','award.svg','alarm-clock.svg','tube.svg','pencil-1.svg','brush.svg','bus.svg','calculator.svg','science-1.svg','palette.svg','alarm.svg','pen-1.svg','lamp.svg','bag.svg','files.svg','planet.svg','whiteboard.svg','people.svg'];
+    
 
-;(function(window, document) {
+var done=0;
+function select()
+{
+    if(done==pics.length)
+      done=0;
+    return pics[done++];
+}
+
+(function(window, document) {
   "use strict";
   var pluginName = 'particleground';
 
@@ -48,6 +58,7 @@
 
     options = extend({}, window[pluginName].defaults, options);
 
+    
     /**
      * Init
      */
@@ -120,6 +131,7 @@
       };
       // Draw particles
       for (var i = 0; i < particles.length; i++) {
+        
         particles[i].draw();
       };
 
@@ -182,11 +194,13 @@
      * Particle
      */
     function Particle() {
+
       this.stackPos;
       this.active = true;
       this.layer = Math.ceil(Math.random() * 3);
       this.parallaxOffsetX = 0;
       this.parallaxOffsetY = 0;
+      this.created='false';
       // Initial particle position
       this.position = {
         x: Math.ceil(Math.random() * canvas.width),
@@ -223,36 +237,56 @@
     /**
      * Draw particle
      */
+     
     Particle.prototype.draw = function() {
       // Draw circle
-      ctx.beginPath();
-      ctx.arc(this.position.x + this.parallaxOffsetX, this.position.y + this.parallaxOffsetY, options.particleRadius / 2, 0, Math.PI * 2, true);
-      ctx.closePath();
-      ctx.fill();
-
+      
+        
+      
+            
+           
+            if(this.src==null)
+            {
+               var img= new Image();
+               var temp=select();
+              
+               img.src=temp;
+               this.src=temp;
+              ctx.drawImage(img,this.position.x + this.parallaxOffsetX, this.position.y + this.parallaxOffsetY,70,50);
+            }
+            else
+            {
+              
+               var img= new Image();
+               img.src=this.src;
+              ctx.drawImage(img,this.position.x + this.parallaxOffsetX, this.position.y + this.parallaxOffsetY,70,50);
+            }
+            
+      
       // Draw lines
-      ctx.beginPath();
+     // ctx.beginPath();
       // Iterate over all particles which are higher in the stack than this one
-      for (var i = particles.length - 1; i > this.stackPos; i--) {
-        var p2 = particles[i];
+     // for (var i = particles.length - 1; i > this.stackPos; i--) {
+       // var p2 = particles[i];
 
         // Pythagorus theorum to get distance between two points
-        var a = this.position.x - p2.position.x
-        var b = this.position.y - p2.position.y
-        var dist = Math.sqrt((a * a) + (b * b)).toFixed(2);
+        //var a = this.position.x - p2.position.x
+        //var b = this.position.y - p2.position.y
+        //var dist = Math.sqrt((a * a) + (b * b)).toFixed(2);
 
         // If the two particles are in proximity, join them
-        if (dist < options.proximity) {
-          ctx.moveTo(this.position.x + this.parallaxOffsetX, this.position.y + this.parallaxOffsetY);
-          if (options.curvedLines) {
-            ctx.quadraticCurveTo(Math.max(p2.position.x, p2.position.x), Math.min(p2.position.y, p2.position.y), p2.position.x + p2.parallaxOffsetX, p2.position.y + p2.parallaxOffsetY);
-          } else {
-            ctx.lineTo(p2.position.x + p2.parallaxOffsetX, p2.position.y + p2.parallaxOffsetY);
-          }
-        }
-      }
-      ctx.stroke();
-      ctx.closePath();
+        //if (dist < options.proximity) {
+          //ctx.moveTo(this.position.x + this.parallaxOffsetX, this.position.y + this.parallaxOffsetY);
+          //if (options.curvedLines) {
+            //ctx.quadraticCurveTo(Math.max(p2.position.x, p2.position.x), Math.min(p2.position.y, p2.position.y), p2.position.x + p2.parallaxOffsetX, p2.position.y + p2.parallaxOffsetY);
+          //} else {
+            //ctx.lineTo(p2.position.x + p2.parallaxOffsetX, p2.position.y + p2.parallaxOffsetY);
+          //}
+        //}
+      //}
+      //ctx.stroke();
+      //ctx.closePath();
+
     }
 
     /**
@@ -327,6 +361,7 @@
     /**
      * Setter: particle stacking position
      */
+
     Particle.prototype.setStackPos = function(i) {
       this.stackPos = i;
     }
@@ -375,8 +410,8 @@
     maxSpeedY: 0.7,
     directionX: 'center', // 'center', 'left' or 'right'. 'center' = dots bounce off edges
     directionY: 'center', // 'center', 'up' or 'down'. 'center' = dots bounce off edges
-    density: 10000, // How many particles will be generated: one particle every n pixels
-    dotColor: '#666666',
+    density: 20000, // How many particles will be generated: one particle every n pixels
+    dotColor: 'white',
     lineColor: '#666666',
     particleRadius: 7, // Dot size
     lineWidth: 1,
@@ -458,40 +493,4 @@ document.addEventListener('DOMContentLoaded', function () {
 }, false);
 
 
-var w=window.innerWidth;
-var h=800;
 
-
-$('body').css('height','800px');
-$('body').css('width',w);
-var pics=['basketball.svg','bell.svg','blackboard.svg','calendar.svg','clock.svg','idea.svg','laptop.svg','magnifier.svg','ruler.svg','school-bag.svg','bulb.svg','globe-grid.svg','document.svg','book-1.svg','book.svg','trophy.svg','graduation-cap.svg','science.svg','pencil.svg','award.svg','alarm-clock.svg','tube.svg','pencil-1.svg','brush.svg','bus.svg','calculator.svg','science-1.svg','palette.svg','alarm.svg','pen-1.svg','lamp.svg','bag.svg','files.svg','planet.svg','whiteboard.svg','people.svg'];
-console.log(pics);
-var elements=pics.length;
-function loadpics()
-{
-  var i;
-  
-  for(i=0;i<pics.length;i++)
-  {
-    var left=(i%8)*w/8+((Math.random()*w/20));
-    var top=Math.floor(i/8)*h/4+((Math.random()*h/10));
-    var s='<img src="'+select()+'" style="position: absolute;left:'+left+'px;top:'+top+'px ;transform: rotate('+Math.floor(Math.random()*90)+'deg);">';
-    $('#particles').append(s);
-
-  }
-}
-var done=0;
-function select()
-{
-    var n=Math.floor(Math.random()*elements);
-    var temp=pics[n];
-    var send=pics[n];
-    pics[n]=pics[pics.length-done-1];
-    pics[pics.length-done-1]=temp;
-    console.log(pics);
-    console.log(send);
-    elements--;
-    done++;
-    return send;
-}
-loadpics();

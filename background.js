@@ -15,7 +15,7 @@ function loadpics()
   {
     var left=(i%8)*w/8+((Math.random()*w/20));
     var top=Math.floor(i/8)*h/4+((Math.random()*h/10));
-    var s='<img src="'+select()+'" style="position: absolute;left:'+left+'px;top:'+top+'px ;transform: rotate('+Math.floor(Math.random()*90)+'deg);">';
+    var s='<div style="position: absolute;left:'+left+'px;top:'+top+'px ;transform: rotate('+Math.floor(Math.random()*90)+'deg);"><object class="s" type="image/svg+xml" data="'+select()+'">Your browser does not support SVGs</object</div>';
     $('body').append(s);
 
   }
