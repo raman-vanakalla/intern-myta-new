@@ -450,8 +450,8 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   particleground(document.getElementById('particles'), {
-    dotColor: '#eee',
-    lineColor: '#eee'
+    dotColor: 'white',
+    lineColor: '#000080'
   });
   var intro = document.getElementById('intro');
   intro.style.marginTop = - intro.offsetHeight / 2 + 'px';
@@ -473,8 +473,8 @@ function loadpics()
   
   for(i=0;i<pics.length;i++)
   {
-    var left=(i%10)*w/10+Math.floor((Math.random()*w/20));
-    var top=(i/10)*h/5+Math.floor((Math.random()*h/20));
+    var left=(i%10)*w/10+((Math.random()*w/20));
+    var top=(i/10)*h/5+((Math.random()*h/20));
     var s='<img src="'+select()+'" style="position: absolute;left:'+left+'px;top:'+top+'px ;transform: rotate('+Math.floor(Math.random()*90)+'deg);">';
     $('#particles').append(s);
 
